@@ -7,7 +7,7 @@ use serenity::model::gateway::Ready;
 use serenity::prelude::*;
 
 mod command;
-use command::{ping::*, hello::*};
+use command::{ping::*, hello::*, cheese::*};
 
 struct Handler;
 
@@ -19,7 +19,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(ping, hello)]
+#[commands(ping, hello, cheese)]
 struct General;
 
 #[tokio::main]
