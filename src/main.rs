@@ -7,7 +7,7 @@ use serenity::model::gateway::Ready;
 use serenity::prelude::*;
 
 mod command;
-use command::{ping::*, hello::*, cheese::*, random::*, help::*, source::*};
+use command::{ping::*, hello::*, cheese::*, random::*, help::*, source::*, calc::*};
 
 struct Handler;
 
@@ -19,7 +19,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(ping, hello, cheese, random, help, source)]
+#[commands(ping, hello, cheese, random, source, calc)]
 struct General;
 
 #[tokio::main]
@@ -32,7 +32,9 @@ async fn main() {
         | GatewayIntents::MESSAGE_CONTENT;
 
     let framework = StandardFramework::new()
-        .configure(|c| c.prefix("~")).group(&GENERAL_GROUP);
+        .configure(|c| c.prefix("~"))
+        .help(&HELP)
+        .group(&GENERAL_GROUP);
 
     let mut client =
         Client::builder(&token, intents)

@@ -1,4 +1,4 @@
-use serenity::framework::standard::macros::command;
+use serenity::framework::standard::macros::help;
 use serenity::framework::standard::CommandResult;
 use serenity::model::prelude::*;
 use serenity::prelude::*;
@@ -9,10 +9,10 @@ const HELP_MESSAGE: &str =
 `~hello`                            Complete this sentence
 `~ping`                             PONG!!
 `~cheese [TYPE-OF-CHEESE]`          Is this a good cheese?
-`~source`                           About the authour and program
-`~help`                             You need some help?";
+`~calc   [MATH_EXPRESSION]`         Evaluate a math expression
+`~source`                           About the authour and program";
 
-#[command]
+#[help]
 async fn help(ctx: &Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(&ctx.http, HELP_MESSAGE).await?;
 
