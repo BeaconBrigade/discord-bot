@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 serenity = { version = "0.11", features = ["framework", "standard_framework"] }
 tokio = { version = "1.19", features = ["macros", "rt-multi-thread"] }
+rand = "0.8.5"
