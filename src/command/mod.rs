@@ -5,3 +5,4 @@ pub mod random;
 pub mod help;
 pub mod source;
 pub mod calc;
+pub mod meme;

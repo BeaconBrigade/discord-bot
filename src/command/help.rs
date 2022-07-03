@@ -10,6 +10,7 @@ const HELP_MESSAGE: &str =
 `~ping`                             PONG!!
 `~cheese [TYPE-OF-CHEESE]`          Is this a good cheese?
 `~calc   [MATH_EXPRESSION]`         Evaluate a math expression
+`~meme`                             Get a random meme
 `~source`                           About the authour and program";
 
 #[help]
