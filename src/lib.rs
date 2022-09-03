@@ -1,13 +1,13 @@
-use std::env;
-
 use serenity::async_trait;
-use serenity::framework::StandardFramework;
 use serenity::framework::standard::macros::group;
+use serenity::framework::StandardFramework;
 use serenity::model::gateway::Ready;
 use serenity::prelude::*;
+use shuttle_service::{error::CustomError, SecretStore};
+use sqlx::PgPool;
 
 mod command;
-use command::{ping::*, hello::*, cheese::*, random::*, help::*, source::*, calc::*, meme::*};
+use command::{calc::*, cheese::*, hello::*, help::*, meme::*, ping::*, random::*, source::*};
 
 struct Handler;
 
@@ -22,11 +22,13 @@ impl EventHandler for Handler {
 #[commands(ping, hello, cheese, random, source, calc, meme)]
 struct General;
 
-#[tokio::main]
-async fn main() {
-   
-    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
-    
+#[shuttle_service::main]
+async fn serenity(#[shared::Postgres] pool: PgPool) -> shuttle_service::ShuttleSerenity {
+    let token = pool
+        .get_secret("DISCORD_TOKEN")
+        .await
+        .map_err(CustomError::new)?;
+
     let intents = GatewayIntents::GUILD_MESSAGES
         | GatewayIntents::DIRECT_MESSAGES
         | GatewayIntents::MESSAGE_CONTENT;
@@ -36,14 +38,11 @@ async fn main() {
         .help(&HELP)
         .group(&GENERAL_GROUP);
 
-    let mut client =
-        Client::builder(&token, intents)
-            .framework(framework)
-            .event_handler(Handler)
-            .await
-            .expect("Err creating client");
+    let client = Client::builder(&token, intents)
+        .framework(framework)
+        .event_handler(Handler)
+        .await
+        .expect("Err creating client");
 
-    if let Err(why) = client.start().await {
-        println!("Client error: {:?}", why);
-    }
+    Ok(client)
 }

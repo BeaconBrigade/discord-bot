@@ -3,10 +3,12 @@ name = "discord-bot"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
 
 [dependencies]
-serenity = { version = "0.11", features = ["framework", "standard_framework", "model"] }
+serenity = { version = "0.11", features = ["framework", "standard_framework", "model", "rustls_backend"] }
 tokio = { version = "1.19", features = ["macros", "rt-multi-thread"] }
 rand = "0.8.5"
 meval = "0.2.0"
+shuttle-service = { version = "0.5.1", features = ["bot-serenity", "secrets", "sqlx-postgres"] }
+sqlx = { version = "0.6", features = ["runtime-tokio-native-tls", "postgres"] }
