@@ -10,7 +10,7 @@ homepage = "https://github.com/BeaconBrigade/discord-bot"
 [lib]
 
 [dependencies]
-serenity = { version = "0.11", features = [
+serenity = { version = "0.11", default-features = false, features = [
     "framework",
     "standard_framework",
     "model",
@@ -19,7 +19,7 @@ serenity = { version = "0.11", features = [
 tokio = { version = "1.19", features = ["macros", "rt-multi-thread"] }
 rand = "0.8.5"
 meval = "0.2.0"
-shuttle-service = { version = "0.5.1", features = [
+shuttle-service = { version = "0.5.2", features = [
     "bot-serenity",
     "secrets",
     "sqlx-postgres",
